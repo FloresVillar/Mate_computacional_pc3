@@ -1,0 +1,9 @@
+acercanos al punto de la frontera omega desde su interior
+se aplica a los problemas con restricciones tipo desigualdades 
+es necesario que omega 0!= vacio
+aproximarse a cualquier punto delta Omega desde omega 0
+B es continua
+B mayor  o igual que 0
+B tiende a inf cuando se acerca a delta omega
+
+

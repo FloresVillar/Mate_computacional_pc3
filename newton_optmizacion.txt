@@ -1,0 +1,52 @@
+#%%
+import numpy as np
+
+#%% Define el gradiente y la hessiana
+
+#gradient = np.array([lambda x, y: 3*x + y - 13, lambda x, y:3*y + x - 13])
+gradient = np.array([lambda x, y: 2.1*x + 0.1*y - 8.5, lambda x, y:2.1*y + 0.1*x - 8.5])
+
+# hessian = np.array([
+#     [lambda x, y: 3,    lambda x, y: 1],
+#     [lambda x, y: 1,    lambda x, y: 3]
+# ])
+hessian = np.array([
+    [lambda x, y: 2.1,    lambda x, y: 0.1],
+    [lambda x, y: 0.1,    lambda x, y: 2.1]
+])
+
+
+#%% Metodo
+
+def newton2D(gradient, hessian, x_0, iterations=100):    
+    """Imprime las iteraciones del método de newton
+    Parametros:
+        gradient (array1D): El gradiente de la función 
+        hessian (array2D): La hessiana de la función 
+        x_0 (array1D): El vector con los valores iniciales
+        iterations (Int): Cantidad de iteraciones deseadas
+        
+    Descripcion:
+    Usamos la forma x_{k+1} = x_k - H^{-1}(x_k) @ grad(x_k)
+    he imprimimos cada x_{k+1}
+    """
+    x_k = x_0
+    for i in range(iterations):
+        hessian_val = np.array([
+            [hessian[0, 0](x_k[0], x_k[1]), hessian[0, 1](x_k[0], x_k[1])],
+            [hessian[1, 0](x_k[0], x_k[1]), hessian[1, 1](x_k[0], x_k[1])]
+        ])
+        
+        grad_val = np.array([
+            gradient[0](x_k[0], x_k[1]), gradient[1](x_k[0], x_k[1])
+        ])
+        
+        hessian_inverse = np.linalg.inv(hessian_val)
+        x_next = x_k - hessian_inverse @ grad_val
+        print(f"x_{i+1}: {x_next[0]:.3f}, {x_next[1]:.3f}")
+        x_k = x_next
+
+  
+#%% Ejemplo
+x_0 = np.array([0, 0])     
+newton2D(gradient, hessian, x_0)
